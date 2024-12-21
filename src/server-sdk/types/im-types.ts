@@ -81,7 +81,9 @@ export type DingTalkMarkdownMessage = {
   };
 };
 
-export type DingTalkActionCardMessage = DingTalkActionCardMessageWithSingleAction | DingTalkActionCardMessageWithMultipleAction;
+export type DingTalkActionCardMessage =
+  | DingTalkActionCardMessageWithSingleAction
+  | DingTalkActionCardMessageWithMultipleAction;
 
 export type DingTalkActionCardMessageWithSingleAction = {
   msgtype: "action_card";

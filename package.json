@@ -7,6 +7,7 @@
   "scripts": {
     "build": "rimraf dist && rollup --config",
     "dev": "rollup --config",
+    "fmt": "prettier . --write",
     "test": "echo \"Error: no test specified\""
   },
   "keywords": [],
@@ -15,6 +16,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.186",
     "@types/node": "^20.11.16",
+    "prettier": "^3.4.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.79.1",
     "rollup-plugin-tsc-alias": "^1.1.2",
@@ -25,7 +27,7 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@ruiapp/rapid-core": "^0.6.5",
+    "@ruiapp/rapid-core": "file:C:\\Users\\HP\\projects\\ruijs\\rapid\\packages\\rapid-core",
     "axios": "^1.7.9",
     "cron": "^3.1.7",
     "winston": "^3.11.0"

@@ -46,42 +46,23 @@ class DingTalkPlugin implements RapidPlugin {
     }
   }
 
-  async configureModels(
-    server: IRpdServer,
-    applicationConfig: RpdApplicationConfig
-  ): Promise<any> {
+  async configureModels(server: IRpdServer, applicationConfig: RpdApplicationConfig): Promise<any> {
     server.appendApplicationConfig({ models: pluginModels });
   }
 
-  async configureServices(
-    server: IRpdServer,
-    applicationConfig: RpdApplicationConfig
-  ): Promise<any> {
+  async configureServices(server: IRpdServer, applicationConfig: RpdApplicationConfig): Promise<any> {
     this.#dingTalkService = new DingTalkService(server);
     server.registerService("dingTalkService", this.#dingTalkService);
   }
 
-  async configureRoutes(
-    server: IRpdServer,
-    applicationConfig: RpdApplicationConfig
-  ): Promise<any> {
+  async configureRoutes(server: IRpdServer, applicationConfig: RpdApplicationConfig): Promise<any> {
     server.appendApplicationConfig({ routes: pluginRoutes });
   }
 
-  async onApplicationLoaded(
-    server: IRpdServer,
-    applicationConfig: RpdApplicationConfig
-  ) {
+  async onApplicationLoaded(server: IRpdServer, applicationConfig: RpdApplicationConfig) {
     const settingService = server.getService<SettingService>("settingService");
-    const settingValues = await settingService.getSystemSettingValues(
-      "dingTalk"
-    );
-    const apiConfig = pick(settingValues, [
-      "corpId",
-      "agentId",
-      "appKey",
-      "appSecret",
-    ]);
+    const settingValues = await settingService.getSystemSettingValues("dingTalk");
+    const apiConfig = pick(settingValues, ["corpId", "agentId", "appKey", "appSecret"]);
     this.#dingTalkService.initService(apiConfig);
   }
 

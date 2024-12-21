@@ -21,11 +21,14 @@ export default class AuthApi {
    * @returns
    */
   async getAccessToken(options: GetAccessTokenOptions) {
-    const response = await this.#manager.newApiRequest.post<GetAccessTokenResult>(`/v1.0/oauth2/${options.corpId}/token`, {
-      client_id: options.appKey,
-      client_secret: options.appSecret,
-      grant_type: "client_credentials",
-    });
+    const response = await this.#manager.newApiRequest.post<GetAccessTokenResult>(
+      `/v1.0/oauth2/${options.corpId}/token`,
+      {
+        client_id: options.appKey,
+        client_secret: options.appSecret,
+        grant_type: "client_credentials",
+      },
+    );
     return response.data;
   }
 
@@ -35,7 +38,10 @@ export default class AuthApi {
    * @returns
    */
   async getAccessTokenOfInternalApp(options: GetAccessTokenOfInternalAppOptions) {
-    const response = await this.#manager.newApiRequest.post<GetAccessTokenOfInternalAppResult>("/v1.0/oauth2/accessToken", options);
+    const response = await this.#manager.newApiRequest.post<GetAccessTokenOfInternalAppResult>(
+      "/v1.0/oauth2/accessToken",
+      options,
+    );
     return response.data;
   }
 

@@ -11,7 +11,11 @@ export type SendDingTalkWorkMessageInput = {
   message: DingTalkMessage;
 };
 
-export async function handler(plugin: DingTalkPlugin, ctx: ActionHandlerContext, config: SendDingTalkWorkMessageActionHandlerConfig) {
+export async function handler(
+  plugin: DingTalkPlugin,
+  ctx: ActionHandlerContext,
+  config: SendDingTalkWorkMessageActionHandlerConfig,
+) {
   const { routerContext: routeContext } = ctx;
   const input: SendDingTalkWorkMessageInput = ctx.input;
 

@@ -66,13 +66,9 @@ export default class DingTalkServerApi {
   }
 
   async getAccessToken() {
-    const cacheProvider = await this.#server.getFacility<CacheProvider>(
-      "cache"
-    );
+    const cacheProvider = await this.#server.getFacility<CacheProvider>("cache");
     const cache = await cacheProvider.createCache(this.#server);
-    const cacheKey = `dingTalk.suite-${this.#config.appKey}.agent-${
-      this.#config.agentId
-    }.accessToken`;
+    const cacheKey = `dingTalk.suite-${this.#config.appKey}.agent-${this.#config.agentId}.accessToken`;
     let accessToken: string | null = await cache.get(cacheKey);
 
     if (accessToken) {
@@ -106,13 +102,9 @@ export default class DingTalkServerApi {
   }
 
   async getAccessTokenOfInternalApp() {
-    const cacheProvider = await this.#server.getFacility<CacheProvider>(
-      "cache"
-    );
+    const cacheProvider = await this.#server.getFacility<CacheProvider>("cache");
     const cache = await cacheProvider.createCache(this.#server);
-    const cacheKey = `dingTalk.app-${this.#config.appKey}.agent-${
-      this.#config.agentId
-    }.accessToken`;
+    const cacheKey = `dingTalk.app-${this.#config.appKey}.agent-${this.#config.agentId}.accessToken`;
     let accessToken: string | null = await cache.get(cacheKey);
 
     if (accessToken) {

@@ -9,23 +9,17 @@ importers:
   .:
     dependencies:
       '@ruiapp/rapid-core':
-        specifier: ^0.6.5
-        version: 0.6.5(nodemailer@6.9.16)(winston@3.17.0)
+        specifier: file:C:\Users\HP\projects\ruijs\rapid\packages\rapid-core
+        version: file:../rapid/packages/rapid-core(nodemailer@6.9.16)(winston@3.17.0)
+      axios:
+        specifier: ^1.7.9
+        version: 1.7.9
       cron:
         specifier: ^3.1.7
         version: 3.3.1
-      dayjs:
-        specifier: ^1.11.7
-        version: 1.11.13
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      qs:
-        specifier: ^6.11.0
-        version: 6.13.1
-      uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
       winston:
         specifier: ^3.11.0
         version: 3.17.0
@@ -36,9 +30,9 @@ importers:
       '@types/node':
         specifier: ^20.11.16
         version: 20.17.10
-      axios:
-        specifier: ^1.7.9
-        version: 1.7.9
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
       rimraf:
         specifier: ^3.0.2
         version: 3.0.2
@@ -84,8 +78,8 @@ packages:
     resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
     engines: {node: '>= 8.0.0'}
 
-  '@ruiapp/rapid-core@0.6.5':
-    resolution: {integrity: sha512-WkmtbVcjc5Up7rWo1uIfR3w3Ll2KJVR14I3AX+hulKmDbDn0bwnhC5HD6MkzQ2uoeVmbPvcqaMpLgwl+WbEKZg==}
+  '@ruiapp/rapid-core@file:../rapid/packages/rapid-core':
+    resolution: {directory: ../rapid/packages/rapid-core, type: directory}
     peerDependencies:
       nodemailer: ^6.9.15
       winston: ^3.11.0
@@ -650,6 +644,11 @@ packages:
     resolution: {integrity: sha512-B7+VDyb8Tl6oMJT9oSO2CW8XC/T4UcJGrwOVoNGwOQsQYhlpfajmrMj5xeejqaASq3V/EqThyOeATEOMuSEXiA==}
     engines: {node: '>=12'}
 
+  prettier@3.4.2:
+    resolution: {integrity: sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
 
@@ -871,7 +870,7 @@ snapshots:
       estree-walker: 2.0.2
       picomatch: 2.3.1
 
-  '@ruiapp/rapid-core@0.6.5(nodemailer@6.9.16)(winston@3.17.0)':
+  '@ruiapp/rapid-core@file:../rapid/packages/rapid-core(nodemailer@6.9.16)(winston@3.17.0)':
     dependencies:
       bcrypt: 5.1.1
       cron: 3.3.1
@@ -1454,6 +1453,8 @@ snapshots:
   plimit-lit@1.6.1:
     dependencies:
       queue-lit: 1.5.2
+
+  prettier@3.4.2: {}
 
   proxy-from-env@1.1.0: {}
 

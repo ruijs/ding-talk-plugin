@@ -15,16 +15,15 @@ export type SigninWithAuthCodeInput = {
 export async function handler(
   plugin: DingTalkPlugin,
   ctx: ActionHandlerContext,
-  config: SigninWithAuthCodeActionHandlerConfig
+  config: SigninWithAuthCodeActionHandlerConfig,
 ) {
   const { routerContext: routeContext, server } = ctx;
   const input: SigninWithAuthCodeInput = ctx.input;
 
-  const getDingTalkUserInfoResult =
-    await plugin.dingTalkService.getDingTalkUserInfoByAuthCode(
-      routeContext,
-      input.authCode
-    );
+  const getDingTalkUserInfoResult = await plugin.dingTalkService.getDingTalkUserInfoByAuthCode(
+    routeContext,
+    input.authCode,
+  );
   const dingTalkUserId = getDingTalkUserInfoResult?.userid;
   if (!dingTalkUserId) {
     throw new Error("无效的Auth Code。无法获取钉钉用户信息。");

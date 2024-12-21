@@ -1,6 +1,11 @@
 import type DingTalkServerApi from "../dingTalkServerApi";
 import type { ApiResponseBody } from "../types/common-types";
-import type { GetUserByMobileResult, GetUserByUnionIdResult, GetUserDetailsOptions, GetUserDetailsResult } from "../types/user-types";
+import type {
+  GetUserByMobileResult,
+  GetUserByUnionIdResult,
+  GetUserDetailsOptions,
+  GetUserDetailsResult,
+} from "../types/user-types";
 
 export default class UserApi {
   #manager: DingTalkServerApi;
@@ -20,9 +25,12 @@ export default class UserApi {
     }
 
     const accessToken = await this.#manager.getAccessToken();
-    const response = await this.#manager.oldApiRequest.post<ApiResponseBody<GetUserByMobileResult>>(`/topapi/v2/user/getbymobile?access_token=${accessToken}`, {
-      mobile,
-    });
+    const response = await this.#manager.oldApiRequest.post<ApiResponseBody<GetUserByMobileResult>>(
+      `/topapi/v2/user/getbymobile?access_token=${accessToken}`,
+      {
+        mobile,
+      },
+    );
     return response.data;
   }
 
@@ -47,9 +55,12 @@ export default class UserApi {
    */
   async getUserByUnionId(unionid: string) {
     const accessToken = await this.#manager.getAccessToken();
-    const response = await this.#manager.oldApiRequest.post<ApiResponseBody<GetUserByUnionIdResult>>(`/topapi/user/getbyunionid?access_token=${accessToken}`, {
-      unionid,
-    });
+    const response = await this.#manager.oldApiRequest.post<ApiResponseBody<GetUserByUnionIdResult>>(
+      `/topapi/user/getbyunionid?access_token=${accessToken}`,
+      {
+        unionid,
+      },
+    );
     return response.data;
   }
 }

@@ -7,7 +7,7 @@ import { first, trim } from "lodash";
 
 function newDingTalkServerApiNotInitializedError() {
   return new Error(
-    "DingTalk server api was not initialized. Please check if the settings of ding talk intergration were set properly."
+    "DingTalk server api was not initialized. Please check if the settings of ding talk intergration were set properly.",
   );
 }
 
@@ -31,10 +31,7 @@ export default class DingTalkService {
     }
   }
 
-  async getDingTalkUserInfoByAuthCode(
-    routeContext: RouteContext,
-    authCode: string
-  ) {
+  async getDingTalkUserInfoByAuthCode(routeContext: RouteContext, authCode: string) {
     if (!this.#serverApi) {
       throw newDingTalkServerApiNotInitializedError();
     }
@@ -43,14 +40,13 @@ export default class DingTalkService {
       throw new Error("DingTalk auth code is required.");
     }
 
-    const getUserInfoByAuthCodeResult =
-      await this.#serverApi.auth.getUserInfoByAuthCode(authCode);
+    const getUserInfoByAuthCodeResult = await this.#serverApi.auth.getUserInfoByAuthCode(authCode);
     if (getUserInfoByAuthCodeResult.errcode != 0) {
       throw new Error(getUserInfoByAuthCodeResult.errmsg);
     }
 
     const getUserByUnionIdResult = await this.#serverApi.user.getUserByUnionId(
-      getUserInfoByAuthCodeResult.result.unionid
+      getUserInfoByAuthCodeResult.result.unionid,
     );
     if (getUserByUnionIdResult.errcode != 0) {
       throw new Error(getUserByUnionIdResult.errmsg);
@@ -58,11 +54,7 @@ export default class DingTalkService {
     return getUserByUnionIdResult.result;
   }
 
-  async sendWorkMessage(
-    routeContext: RouteContext,
-    userIds: number[],
-    message: DingTalkMessage
-  ) {
+  async sendWorkMessage(routeContext: RouteContext, userIds: number[], message: DingTalkMessage) {
     if (!this.#serverApi) {
       throw newDingTalkServerApiNotInitializedError();
     }
@@ -148,8 +140,7 @@ export default class DingTalkService {
     });
     bindResult.userWithMobileCount = usersWithMobile.length;
 
-    const accountManager =
-      this.#server.getEntityManager<AuthAccount>("auth_account");
+    const accountManager = this.#server.getEntityManager<AuthAccount>("auth_account");
     for (const user of usersWithMobile) {
       const dingTalkAccount = first(user.accounts);
 
@@ -163,8 +154,7 @@ export default class DingTalkService {
         bindResult.userWithMobileCount -= 1;
         continue;
       }
-      const getDingTalkUserByMobileResult =
-        await this.#serverApi.user.getUserByMobile(mobile);
+      const getDingTalkUserByMobileResult = await this.#serverApi.user.getUserByMobile(mobile);
       const dingTalkUserId = getDingTalkUserByMobileResult.result?.userid;
       if (dingTalkUserId) {
         await accountManager.createEntity({
