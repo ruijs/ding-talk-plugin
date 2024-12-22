@@ -1,3 +1,35 @@
+export type DingTalkWorkMessage = DingTalkMessage;
+
+export type DingTalkUserRobotGroupMessage =
+  | DingTalkUserRobotGroupTextMessage
+  | DingTalkUserRobotGroupLinkMessage
+  | DingTalkUserRobotGroupMarkdownMessage
+  | DingTalkUserRobotGroupActionCardMessage
+  | DingTalkUserRobotGroupFeedCardMessage;
+
+export type DingTalkUserRobotGroupTextMessage = DingTalkTextMessage & DingTalkMessageAtOptions;
+export type DingTalkUserRobotGroupLinkMessage = DingTalkLinkMessage;
+export type DingTalkUserRobotGroupMarkdownMessage = DingTalkMarkdownMessage & DingTalkMessageAtOptions;
+export type DingTalkUserRobotGroupActionCardMessage = DingTalkActionCardMessage & DingTalkMessageAtOptions;
+export type DingTalkUserRobotGroupFeedCardMessage = DingTalkFeedCardMessage;
+
+export type DingTalkMessageAtOptions = {
+  /**
+   * 是否@所有人。
+   */
+  isAtAll?: boolean;
+
+  /**
+   * 被@的群成员手机号。
+   */
+  atMobiles?: string[];
+
+  /**
+   * 被@的群成员userId。
+   */
+  atUserIds?: string[];
+};
+
 export type DingTalkMessage =
   | DingTalkTextMessage
   | DingTalkImageMessage
@@ -127,4 +159,29 @@ export type DingTalkActionCardMessageWithMultipleAction = {
       action_url: string;
     }[];
   };
+};
+
+export type DingTalkFeedCardMessage = {
+  msgtype: "feedCard";
+  feedCard: {
+    /**
+     * feedCard消息的内容列表。
+     */
+    links: DingTalkFeedCardMessageLink[];
+  };
+};
+
+export type DingTalkFeedCardMessageLink = {
+  /**
+   * feedCard消息内每条内容的标题。
+   */
+  title?: string;
+  /**
+   * feedCard消息内每条内容的图片URL，建议使用[上传媒体文件](https://open.dingtalk.com/document/orgapp/upload-media-files)接口获取。
+   */
+  picURL?: string;
+  /**
+   * feedCard消息内每条内容的跳转链接。
+   */
+  messageURL?: string;
 };

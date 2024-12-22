@@ -31,6 +31,10 @@ export default class DingTalkService {
     }
   }
 
+  getServerApi() {
+    return this.#serverApi;
+  }
+
   async refreshAccessTokens() {
     const accessToken = await this.#serverApi.getAccessToken();
     this.#server.getLogger().info(`DingTalk access token refreshed.`, { accessToken });

@@ -3,6 +3,7 @@ import AuthApi from "./apis/auth";
 import ImApi from "./apis/im";
 import UserApi from "./apis/user";
 import { CacheProvider, Cache, IRpdServer } from "@ruiapp/rapid-core";
+import UserCustomizedRobotApi from "./apis/userCustomizedRobot";
 
 export type DingTalkServerApiConfig = {
   /**
@@ -40,6 +41,7 @@ export default class DingTalkServerApi {
   readonly auth: AuthApi;
   readonly im: ImApi;
   readonly user: UserApi;
+  readonly userCustomizedRobot: UserCustomizedRobotApi;
 
   #server: IRpdServer;
   #config: DingTalkServerApiConfig;
