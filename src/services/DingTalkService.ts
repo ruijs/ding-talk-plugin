@@ -31,6 +31,11 @@ export default class DingTalkService {
     }
   }
 
+  async refreshAccessTokens() {
+    const accessToken = await this.#serverApi.getAccessToken();
+    this.#server.getLogger().info(`DingTalk access token refreshed.`, { accessToken });
+  }
+
   async getDingTalkUserInfoByAuthCode(routeContext: RouteContext, authCode: string) {
     if (!this.#serverApi) {
       throw newDingTalkServerApiNotInitializedError();

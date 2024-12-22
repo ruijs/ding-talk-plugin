@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import AuthApi from "./apis/auth";
 import ImApi from "./apis/im";
 import UserApi from "./apis/user";
-import { CacheProvider, IRpdServer } from "@ruiapp/rapid-core";
+import { CacheProvider, Cache, IRpdServer } from "@ruiapp/rapid-core";
 
 export type DingTalkServerApiConfig = {
   /**
@@ -66,8 +66,7 @@ export default class DingTalkServerApi {
   }
 
   async getAccessToken() {
-    const cacheProvider = await this.#server.getFacility<CacheProvider>("cache");
-    const cache = await cacheProvider.createCache(this.#server);
+    const cache = await this.#server.getFacility<Cache>("cache");
     const cacheKey = `dingTalk.suite-${this.#config.appKey}.agent-${this.#config.agentId}.accessToken`;
     let accessToken: string | null = await cache.get(cacheKey);
 
@@ -102,8 +101,7 @@ export default class DingTalkServerApi {
   }
 
   async getAccessTokenOfInternalApp() {
-    const cacheProvider = await this.#server.getFacility<CacheProvider>("cache");
-    const cache = await cacheProvider.createCache(this.#server);
+    const cache = await this.#server.getFacility<Cache>("cache");
     const cacheKey = `dingTalk.app-${this.#config.appKey}.agent-${this.#config.agentId}.accessToken`;
     let accessToken: string | null = await cache.get(cacheKey);
 

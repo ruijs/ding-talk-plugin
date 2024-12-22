@@ -27,7 +27,7 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@ruiapp/rapid-core": "file:C:\\Users\\HP\\projects\\ruijs\\rapid\\packages\\rapid-core",
+    "@ruiapp/rapid-core": "^0.7.0",
     "axios": "^1.7.9",
     "cron": "^3.1.7",
     "winston": "^3.11.0"

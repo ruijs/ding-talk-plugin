@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@ruiapp/rapid-core':
-        specifier: file:C:\Users\HP\projects\ruijs\rapid\packages\rapid-core
-        version: file:../rapid/packages/rapid-core(nodemailer@6.9.16)(winston@3.17.0)
+        specifier: ^0.7.0
+        version: 0.7.0(nodemailer@6.9.16)(winston@3.17.0)
       axios:
         specifier: ^1.7.9
         version: 1.7.9
@@ -78,8 +78,8 @@ packages:
     resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
     engines: {node: '>= 8.0.0'}
 
-  '@ruiapp/rapid-core@file:../rapid/packages/rapid-core':
-    resolution: {directory: ../rapid/packages/rapid-core, type: directory}
+  '@ruiapp/rapid-core@0.7.0':
+    resolution: {integrity: sha512-IWuSzpNLoArdZVqSI4Y7bzzQcQhMJ6ExxojEIgbhjQJ6I9tpLyPSCub3U70OpYFpAv0LVeERBA/ddYiEX7hRgQ==}
     peerDependencies:
       nodemailer: ^6.9.15
       winston: ^3.11.0
@@ -870,7 +870,7 @@ snapshots:
       estree-walker: 2.0.2
       picomatch: 2.3.1
 
-  '@ruiapp/rapid-core@file:../rapid/packages/rapid-core(nodemailer@6.9.16)(winston@3.17.0)':
+  '@ruiapp/rapid-core@0.7.0(nodemailer@6.9.16)(winston@3.17.0)':
     dependencies:
       bcrypt: 5.1.1
       cron: 3.3.1

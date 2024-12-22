@@ -13,6 +13,7 @@ import type {
 import pluginActionHandlers from "./actionHandlers";
 import pluginModels from "./models";
 import pluginRoutes from "./routes";
+import pluginCronJobs from "./cronJobs";
 import DingTalkService from "./services/DingTalkService";
 import type SettingService from "@ruiapp/rapid-core/dist/plugins/setting/SettingService";
 import { pick } from "lodash";
@@ -57,6 +58,12 @@ class DingTalkPlugin implements RapidPlugin {
 
   async configureRoutes(server: IRpdServer, applicationConfig: RpdApplicationConfig): Promise<any> {
     server.appendApplicationConfig({ routes: pluginRoutes });
+  }
+
+  async registerCronJobs(server: IRpdServer) {
+    for (const cronJob of pluginCronJobs) {
+      server.registerCronJob(cronJob);
+    }
   }
 
   async onApplicationLoaded(server: IRpdServer, applicationConfig: RpdApplicationConfig) {
