@@ -1,8 +1,8 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 import AuthApi from "./apis/auth";
 import ImApi from "./apis/im";
 import UserApi from "./apis/user";
-import { CacheProvider, Cache, IRpdServer } from "@ruiapp/rapid-core";
+import { Cache, IRpdServer } from "@ruiapp/rapid-core";
 import UserCustomizedRobotApi from "./apis/userCustomizedRobot";
 
 export type DingTalkServerApiConfig = {
@@ -35,6 +35,24 @@ export type DingTalkServerApiConfig = {
   accessToken?: string;
 };
 
+function oldApiResponseInterceptor(response: AxiosResponse<any, any>) {
+  const responseData = response.data;
+  if (responseData.errcode) {
+    throw new Error(responseData.errmsg);
+  }
+
+  return response;
+}
+
+function newApiResponseInterceptor(response: AxiosResponse<any, any>) {
+  if (response.status !== 200) {
+    const responseData = response.data;
+    throw new Error(`${responseData.message} (code: ${responseData.code}, status: ${response.status})`);
+  }
+
+  return response;
+}
+
 export default class DingTalkServerApi {
   readonly oldApiRequest: AxiosInstance;
   readonly newApiRequest: AxiosInstance;
@@ -56,11 +74,13 @@ export default class DingTalkServerApi {
       baseURL: "https://oapi.dingtalk.com",
       validateStatus: null,
     });
+    this.oldApiRequest.interceptors.response.use(oldApiResponseInterceptor);
 
     this.newApiRequest = axios.create({
       baseURL: "https://api.dingtalk.com",
       validateStatus: null,
     });
+    this.newApiRequest.interceptors.response.use(newApiResponseInterceptor);
 
     this.auth = new AuthApi(this);
     this.im = new ImApi(this);
