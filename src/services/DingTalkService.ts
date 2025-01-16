@@ -124,6 +124,7 @@ export default class DingTalkService {
       userWithMobileCount: 0,
       totalBindedCount: 0,
       newBindedCount: 0,
+      errors: [] as any[],
     };
 
     const userManager = this.#server.getEntityManager<OcUser>("oc_user");
@@ -163,18 +164,25 @@ export default class DingTalkService {
         bindResult.userWithMobileCount -= 1;
         continue;
       }
-      const getDingTalkUserByMobileResult = await this.#serverApi.user.getUserByMobile(mobile);
-      const dingTalkUserId = getDingTalkUserByMobileResult.result?.userid;
-      if (dingTalkUserId) {
-        await accountManager.createEntity({
-          entity: {
-            user,
-            providerCode: AUTH_PROVIDER_CODE,
-            externalAccountId: dingTalkUserId,
-          } satisfies Partial<AuthAccount>,
+
+      try {
+        const getDingTalkUserByMobileResult = await this.#serverApi.user.getUserByMobile(mobile);
+        const dingTalkUserId = getDingTalkUserByMobileResult.result?.userid;
+        if (dingTalkUserId) {
+          await accountManager.createEntity({
+            entity: {
+              user,
+              providerCode: AUTH_PROVIDER_CODE,
+              externalAccountId: dingTalkUserId,
+            } satisfies Partial<AuthAccount>,
+          });
+          bindResult.totalBindedCount += 1;
+          bindResult.newBindedCount += 1;
+        }
+      } catch (ex) {
+        bindResult.errors.push({
+          message: `Failed to bind user ${JSON.stringify({ name: user.name, login: user.login, mobile })}. ${ex.message}`,
         });
-        bindResult.totalBindedCount += 1;
-        bindResult.newBindedCount += 1;
       }
     }
 
