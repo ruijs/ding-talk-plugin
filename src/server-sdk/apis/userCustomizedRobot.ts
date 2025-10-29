@@ -1,6 +1,7 @@
 import type DingTalkServerApi from "../dingTalkServerApi";
 import type { ApiResponseBody } from "../types/common-types";
-import { DingTalkUserRobotGroupMessage } from "../types/im-types";
+import { SendGroupMessageOptions } from "../types/service-types";
+import crypto from "crypto";
 
 /**
  * 用户自定义机器人
@@ -18,11 +19,36 @@ export default class UserCustomizedRobotApi {
    * @param options
    * @returns
    */
-  async sendGroupMessage(accessToken: string, message: DingTalkUserRobotGroupMessage) {
-    const response = await this.#manager.oldApiRequest.post<ApiResponseBody<void>>(
-      `/robot/send?access_token=${accessToken}`,
-      message,
-    );
+  async sendGroupMessage(options: SendGroupMessageOptions) {
+    const { accessToken, secret, message } = options;
+
+    // 获取当前unix时间戳，单位：毫秒
+    const timestamp = Date.now();
+    // 计算签名
+    const sign = computeDingTalkSignature(secret, timestamp);
+
+    // 发送请求
+    const params = new URLSearchParams();
+    params.append("access_token", accessToken);
+    if (secret) {
+      params.append("timestamp", timestamp.toString());
+      params.append("sign", sign);
+    }
+    const response = await this.#manager.oldApiRequest.post<ApiResponseBody<void>>(`/robot/send`, message, {
+      params,
+    });
     return response.data;
   }
+}
+
+function computeDingTalkSignature(secret: string | undefined, timestamp: number): string | undefined {
+  if (!secret) {
+    return undefined;
+  }
+
+  const stringToSign = `${timestamp}\n${secret}`;
+  const hmac = crypto.createHmac("sha256", secret);
+  hmac.update(stringToSign);
+  const signData = hmac.digest("base64");
+  return signData;
 }

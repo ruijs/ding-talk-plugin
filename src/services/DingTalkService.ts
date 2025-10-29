@@ -1,9 +1,10 @@
 import type { IRpdServer, RouteContext } from "@ruiapp/rapid-core";
-import type { DingTalkMessage } from "../server-sdk/dingTalkSdkTypes";
+import type { DingTalkMessage, DingTalkUserRobotGroupMessage } from "../server-sdk/dingTalkSdkTypes";
 import type { DingTalkServerApiConfig } from "../server-sdk/dingTalkServerApi";
 import DingTalkServerApi from "../server-sdk/dingTalkServerApi";
 import type { AuthAccount, OcUser } from "../types/entity-types";
 import { first, trim } from "lodash";
+import { SendGroupMessageOptions } from "~/server-sdk/types/service-types";
 
 function newDingTalkServerApiNotInitializedError() {
   return new Error(
@@ -187,5 +188,10 @@ export default class DingTalkService {
     }
 
     return bindResult;
+  }
+
+  async sendGroupMessage(routeContext: RouteContext, options: SendGroupMessageOptions) {
+    const { accessToken, secret, message } = options;
+    this.#serverApi.userCustomizedRobot.sendGroupMessage(options);
   }
 }
