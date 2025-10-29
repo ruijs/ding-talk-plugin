@@ -85,6 +85,7 @@ export default class DingTalkServerApi {
     this.auth = new AuthApi(this);
     this.im = new ImApi(this);
     this.user = new UserApi(this);
+    this.userCustomizedRobot = new UserCustomizedRobotApi(this);
   }
 
   async getAccessToken() {
