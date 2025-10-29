@@ -27,7 +27,7 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@ruiapp/rapid-core": "^0.7.7",
+    "@ruiapp/rapid-core": "^0.10.10",
     "axios": "^1.7.9",
     "cron": "^3.1.7",
     "winston": "^3.11.0"
